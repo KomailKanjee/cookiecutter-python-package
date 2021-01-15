@@ -2,21 +2,21 @@ PYTEST_FLAGS=
 
 # Clean rules
 .PHONY: clean
-clean : 
-	git clean -dX --force 
+clean :
+	git clean -dX --force
 	rm -rf .baked/
 # -------------------
 
 # Setup rules for the dev environment
 .PHONY: setup-dev
 setup-dev :
-	tox --develop --workdir .tox -e py
+	tox --develop --workdir .tox --devenv .tox/py -e py
 # -------------------
 
 # Test rules
 .PHONY: bake
 bake :
-	cookiecutter --overwrite-if-exists --no-input --output-dir ./.baked --config-file ./tests/cookiecutter_test_user_config.yml .
+	cookiecutter --overwrite-if-exists --no-input --output-dir ./.baked --config-file ./tests/cookiecutter_test_user_config.yaml .
 
 .PHONY: pytest
 pytest :
@@ -36,7 +36,7 @@ lint : bake flake8_check pylint_check yapf_check rst_check
 
 .PHONY: flake8_check
 flake8_check :
-	flake8 --max-line-length=80 --count --statistics *.py hooks .baked/
+	flake8 --max-complexity 10 --radon-max-cc 10 --max-line-length=80 --count --statistics *.py hooks .baked/
 
 .PHONY: pylint_check
 pylint_check :
@@ -47,7 +47,7 @@ yapf_check :
 	yapf --recursive --parallel --verbose --diff .
 
 .PHONY: rst_check
-rst_check : 
+rst_check :
 	rst-lint *.rst
 # -------------------
 
@@ -61,7 +61,7 @@ yapf:
 .PHONY: doc_test
 doc_test : doc_dry_run_test doc_link_check
 
-.PHONY: doc_dry_run_test 
+.PHONY: doc_dry_run_test
 doc_dry_run_test :
 	make --directory=./docs SPHINXOPTS="-W -n --keep-going" html
 
@@ -75,3 +75,20 @@ doc_link_check :
 docs :
 	make --directory=./docs html
 # -------------------
+
+# Debug report rules
+.PHONY: debug-report
+debug-report :
+	@echo "|*****************|"
+	-which python
+	@echo "|*****************|"
+	-which pip
+	@echo "|*****************|"
+	-python --version
+	@echo "|*****************|"
+	-pip freeze
+	@echo "|*****************|"
+	-git status
+	@echo "|*****************|"
+	-git log -1
+	@echo "|*****************|"
