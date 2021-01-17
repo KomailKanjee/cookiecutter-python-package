@@ -31,16 +31,17 @@ def test_bake_selecting_license(cookies):
     now = datetime.datetime.now()
 
     for license in supported_licenses:
-        with bake_cookie(cookies, extra_context={"project_license": license}) as result:
+        with bake_cookie(cookies, extra_context={"project_license":
+                                                 license}) as result:
             if license == "Proprietary":
-                assert (
-                    "All rights reserved."
-                    in result.project.join("LICENSE.rst").readlines()[3]
-                )
+                assert ("All rights reserved." in result.project.join(
+                    "LICENSE.rst").readlines()[3])
             else:
-                assert license in result.project.join("LICENSE.rst").readlines()[2]
+                assert license in result.project.join(
+                    "LICENSE.rst").readlines()[2]
 
-            assert f"license = {license}" in result.project.join("setup.cfg").read()
+            assert f"license = {license}" in result.project.join(
+                "setup.cfg").read()
 
             license_file = result.project.join("LICENSE.rst").read()
             assert str("Cookie Baker") in license_file

@@ -31,10 +31,8 @@ def version():
     """
     The function that gets invoked by the subcommand "version"
     """
-    click.echo(
-        f"Python {platform.python_version()}\n"
-        f"{{ cookiecutter.project_slug }} {__version__}"
-    )
+    click.echo(f"Python {platform.python_version()}\n"
+               f"{{ cookiecutter.project_slug }} {__version__}")
 
 
 cli.add_command(run)  # pylint: disable=no-member

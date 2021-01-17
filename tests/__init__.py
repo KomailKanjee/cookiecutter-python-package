@@ -77,9 +77,8 @@ def load_cookiecutter_json():
     """
     Load the cookiecutter.json file and return it as dict
     """
-    cookiecutter_json_file_path = os.path.join(
-        os.path.dirname(__file__), os.pardir, "cookiecutter.json"
-    )
+    cookiecutter_json_file_path = os.path.join(os.path.dirname(__file__),
+                                               os.pardir, "cookiecutter.json")
     with open(cookiecutter_json_file_path) as fp:
         data = json.load(fp)
 

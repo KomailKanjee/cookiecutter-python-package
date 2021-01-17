@@ -17,18 +17,20 @@ def initialize_git_repo():
     """
     Initialize the Git repository in the generated project.
     """
-    subprocess.check_output(
-        "git init", stderr=subprocess.STDOUT, shell=True, cwd=PROJECT_DIRECTORY
-    )
+    subprocess.check_output("git init",
+                            stderr=subprocess.STDOUT,
+                            shell=True,
+                            cwd=PROJECT_DIRECTORY)
 
 
 def git_add():
     """
     Do a Git add operation on the generated project.
     """
-    subprocess.check_output(
-        "git add --all", stderr=subprocess.STDOUT, shell=True, cwd=PROJECT_DIRECTORY
-    )
+    subprocess.check_output("git add --all",
+                            stderr=subprocess.STDOUT,
+                            shell=True,
+                            cwd=PROJECT_DIRECTORY)
 
 
 def git_commit():
@@ -42,13 +44,11 @@ def git_commit():
     for key, val in cookiecutter_config.items():  # noqa pylint: disable=no-member
         cookiecutter_config_str += f"  {key}: {val}\n"
 
-    commit_message = (
-        "Template applied from"
-        " https://github.com/Digimach/cookiecutter-python-"
-        "package\n\n"
-        "Template configuration:\n"
-        f"{cookiecutter_config_str}"
-    )
+    commit_message = ("Template applied from"
+                      " https://github.com/Digimach/cookiecutter-python-"
+                      "package\n\n"
+                      "Template configuration:\n"
+                      f"{cookiecutter_config_str}")
 
     author_info = "{{ cookiecutter.project_author_name }}"
     author_info += " <{{cookiecutter.project_author_email }}>"
@@ -59,7 +59,8 @@ def git_commit():
 
     try:
         subprocess.check_output(
-            (f'git commit --author "{author_info}"' f' --message "{commit_message}"'),
+            (f'git commit --author "{author_info}"'
+             f' --message "{commit_message}"'),
             shell=True,
             cwd=PROJECT_DIRECTORY,
             env=env,
@@ -109,18 +110,19 @@ def set_license():
     license to the generated project as the "LICENSE" file.
     """
     project_directory = PROJECT_DIRECTORY
-    license_file = os.path.join(
-        project_directory, "LICENSES", "{{ cookiecutter.project_license }}.rst"
-    )
+    license_file = os.path.join(project_directory, "LICENSES",
+                                "{{ cookiecutter.project_license }}.rst")
 
     if not os.path.exists(license_file):
-        raise IOError("No known license for {{ cookiecutter.project_license }}")
+        raise IOError(
+            "No known license for {{ cookiecutter.project_license }}")
 
     shutil.move(license_file, os.path.join(project_directory, "LICENSE.rst"))
     shutil.rmtree(os.path.join(project_directory, "LICENSES"))
 
     # Add the title to the LICENSE.rst file
-    with open(os.path.join(project_directory, "LICENSE.rst"), "r+") as license_fp:
+    with open(os.path.join(project_directory, "LICENSE.rst"),
+              "r+") as license_fp:
         content = license_fp.read()
         license_fp.seek(0, 0)
         license_fp.write("LICENSE\n#######" + "\n" + content)

@@ -17,4 +17,5 @@ def test_code_of_conduct_file(cookies):
         code_of_conduct = result.project.join("CODE_OF_CONDUCT.rst").read()
         cookiecutter_json = load_cookiecutter_json()
 
-        assert str(cookiecutter_json["project_author_email"]) in code_of_conduct
+        assert str(
+            cookiecutter_json["project_author_email"]) in code_of_conduct
