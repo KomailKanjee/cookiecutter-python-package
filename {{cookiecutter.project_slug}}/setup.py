@@ -15,17 +15,12 @@ with open("src/{{ cookiecutter.project_slug }}/__init__.py", encoding="utf8") as
 
 setup(
     version=version,
-    install_requires={{
-        cookiecutter.install_requires.replace(" ", "").split(',')
-    }},
+    install_requires={{cookiecutter.install_requires.replace(" ", "").split(",")}},
     extras_require={
-        "test": {{
-            cookiecutter.project_extra_test_requires.replace(" ",
-                                                             "").split(',')
-        }},
-        "dev": {{
-            cookiecutter.project_extra_dev_requires.replace(" ", "").split(',')
-        }}
+        "test": {
+            {cookiecutter.project_extra_test_requires.replace(" ", "").split(",")}
+        },
+        "dev": {{cookiecutter.project_extra_dev_requires.replace(" ", "").split(",")}},
     },
     zip_safe=False,
     platforms="any",
