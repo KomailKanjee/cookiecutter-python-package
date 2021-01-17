@@ -2,8 +2,8 @@
 """
 setup.py for Cookiecutter template project.
 """
-
-from setuptools import find_packages, setup
+from setuptools import find_packages
+from setuptools import setup
 
 setup(
     name="cookiecutter-python-package",

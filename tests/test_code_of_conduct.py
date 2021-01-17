@@ -3,7 +3,8 @@ CODE_OF_CONDUCT file testing module for the generated project.
 """
 import os
 
-from . import bake_cookie, load_cookiecutter_json
+from . import bake_cookie
+from . import load_cookiecutter_json
 
 
 def test_code_of_conduct_file(cookies):

@@ -4,7 +4,8 @@ License file testing module for the generated project.
 import datetime
 import os
 
-from . import bake_cookie, load_cookiecutter_json
+from . import bake_cookie
+from . import load_cookiecutter_json
 
 
 def test_license_file_exists(cookies):
